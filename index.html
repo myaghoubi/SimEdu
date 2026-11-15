@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<title>شبیه‌سازهای درس ساختمان داده‌ها</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <button class="btn icon" id="menuBtn" type="button" aria-label="منوی اصلی" aria-expanded="false" aria-controls="drawer">☰</button>
+      <h1><span id="simTitle"></span><small id="simSub"></small></h1>
+    </div>
+    <div class="vers">
+      <button class="btn" id="installBtn" hidden>نصب برنامه</button>
+      <span class="ver" id="ver" title="شماره نسخه‌ی برنامه"></span>
+      <button class="btn" id="updBtn" title="بررسی و نصب نسخه‌ی جدید (هر ۱۰ ثانیه هم خودکار بررسی می‌شود)">⟳ بروزرسانی</button>
+    </div>
+  </header>
+
+  <div id="view"></div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<nav class="drawer" id="drawer" aria-label="منوی اصلی" aria-hidden="true">
+  <div class="dr-head"><b>منوی اصلی</b><button class="btn icon" id="menuClose" type="button" aria-label="بستن منو">✕</button></div>
+  <ul class="menu" id="menu"></ul>
+</nav>
+<div id="toast"></div>
+
+<script src="version.js"></script>
+<script src="shell.js"></script>
+<script src="update.js"></script>
+</body>
+</html>
