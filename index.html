@@ -1,41 +1,142 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2563eb">
-<title>شبیه‌سازهای درس ساختمان داده‌ها</title>
+<title>ساختمان داده – آموزش تصویری</title>
+<meta name="description" content="محیط آموزشی ساختمان داده: اجرای گام‌به‌گام شبه‌کد پایتونی همراه با نمای گرافیکی آرایه، لیست پیوندی، درخت (AVL) و گراف.">
+<meta name="theme-color" content="#4f46e5">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="stylesheet" href="style.css">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="app">
-  <header class="top">
-    <div class="brand">
-      <button class="btn icon" id="menuBtn" type="button" aria-label="منوی اصلی" aria-expanded="false" aria-controls="drawer">☰</button>
-      <h1><span id="simTitle"></span><small id="simSub"></small></h1>
-    </div>
-    <div class="vers">
-      <button class="btn" id="installBtn" hidden>نصب برنامه</button>
-      <span class="ver" id="ver" title="شماره نسخه‌ی برنامه"></span>
-      <button class="btn" id="updBtn" title="بررسی و نصب نسخه‌ی جدید (هر ۱۰ ثانیه هم خودکار بررسی می‌شود)">⟳ بروزرسانی</button>
-    </div>
-  </header>
 
-  <div id="view"></div>
+<!-- نمادها -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-restart" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 5v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-step" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 5v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-over" viewBox="0 0 24 24"><path d="M4 15c2-8 14-8 16 0M17 12l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-out" viewBox="0 0 24 24"><path d="M12 19V6M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 4h4v16H7zM13 4h4v16h-4z" fill="currentColor"/></symbol>
+    <symbol id="i-fast" viewBox="0 0 24 24"><path d="M3 5v14l9-7zM12 5v14l9-7z" fill="currentColor"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.6 2.2c-.8.5-1.1 1-1.1 1.8M12 17v.2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-bars" viewBox="0 0 24 24"><path d="M5 20V12M10 20V5M15 20V9M20 20V14" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/></symbol>
+    <symbol id="i-install" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7L4 12l5 5M4 12h10a6 6 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 -3)"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.6" fill="#fff"/><circle cx="5.5" cy="18" r="2.6" fill="#fff"/><circle cx="18.5" cy="18" r="2.6" fill="#fff"/><path d="M12 7.5L6.5 15.8M12 7.5l5.5 8.3" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </span>
+    <span>ساختمان داده <small>اجرای گام‌به‌گام + نمای گرافیکی</small></span>
+  </div>
+    <select id="exampleSelect" class="example-select" aria-label="انتخاب مثال"></select>
+  <button class="btn" id="btnRevert" title="بازگرداندن کد اصلی این مثال"><svg><use href="#i-undo"/></svg><span class="lbl">بازگردانی مثال</span></button>
+  <span class="spacer"></span>
+  <div class="group">
+    <button class="btn icon" id="btnBars" title="نمایش آرایه‌های عددی به‌صورت میله‌ای" aria-pressed="false"><svg><use href="#i-bars"/></svg><span class="lbl">میله‌ای</span></button>
+    <button class="btn icon" id="btnTheme" title="تم روشن/تیره" aria-label="تغییر تم"><svg><use href="#i-moon"/></svg></button>
+    <button class="btn icon" id="btnHelp" title="راهنما"><svg><use href="#i-help"/></svg><span class="lbl">راهنما</span></button>
+    <button class="btn" id="btnInstall" hidden><svg><use href="#i-install"/></svg><span class="lbl">نصب برنامه</span></button>
+  </div>
+</header>
+
+<div class="controls" role="toolbar" aria-label="کنترل اجرا">
+  <button class="btn" id="btnRestart" title="شروع مجدد از ابتدا"><svg><use href="#i-restart"/></svg><span class="lbl">از ابتدا</span></button>
+  <button class="btn" id="btnBack" title="گام قبل (Alt+←)"><svg><use href="#i-back"/></svg><span class="lbl">گام قبل</span></button>
+  <button class="btn primary" id="btnStep" title="گام بعد؛ ورود به توابع (Alt+→)"><svg><use href="#i-step"/></svg><span class="lbl">گام بعد</span></button>
+  <button class="btn" id="btnOver" title="عبور از فراخوانی تابع (Alt+↓)"><svg><use href="#i-over"/></svg><span class="lbl">عبور</span></button>
+  <button class="btn" id="btnOut" title="خروج از تابع جاری (Alt+↑)"><svg><use href="#i-out"/></svg><span class="lbl">خروج</span></button>
+  <span class="sep"></span>
+  <button class="btn" id="btnPlay" title="اجرای خودکار (Alt+Space)"><svg><use href="#i-play"/></svg><span class="lbl">اجرای خودکار</span></button>
+  <button class="btn" id="btnRun" title="اجرا تا نقطهٔ توقف یا پایان"><svg><use href="#i-fast"/></svg><span class="lbl">ادامه</span></button>
+  <label class="range" title="سرعت"><span>سرعت</span><input type="range" id="speed" min="1" max="10" value="5" aria-label="سرعت اجرای خودکار"></label>
+  <span class="sep"></span>
+  <span class="stepcount" id="stepCount" aria-live="polite">گام ۰</span>
+  <input type="range" id="stepSlider" min="0" max="0" value="0" aria-label="پیمایش گام‌ها">
 </div>
 
-<div class="scrim" id="scrim" hidden></div>
-<nav class="drawer" id="drawer" aria-label="منوی اصلی" aria-hidden="true">
-  <div class="dr-head"><b>منوی اصلی</b><button class="btn icon" id="menuClose" type="button" aria-label="بستن منو">✕</button></div>
-  <ul class="menu" id="menu"></ul>
-</nav>
-<div id="toast"></div>
+<main class="layout">
+  <section class="pane code-pane" aria-label="ویرایشگر کد">
+    <div class="pane-head"><span>کد (شبه‌پایتون)</span><span class="hint">قابل ویرایش · روی شمارهٔ خط کلیک کنید تا نقطهٔ توقف بگذارید</span></div>
+    <div class="editor" id="editor">
+      <div class="gutter" id="gutter" aria-hidden="true"></div>
+      <div class="code-stack">
+        <pre class="hl" id="hl" aria-hidden="true"></pre>
+        <textarea class="ta" id="ta" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="کد برنامه" dir="ltr"></textarea>
+      </div>
+    </div>
+    <div class="editor-status ok" id="status">آماده</div>
+    <div class="ex-desc" id="exDesc"></div>
+  </section>
 
-<script src="version.js"></script>
-<script src="shell.js"></script>
-<script src="update.js"></script>
+  <section class="pane info-pane" aria-label="اطلاعات اجرا">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-tab="vars">متغیرها</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="stack">پشتهٔ فراخوانی</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="out">خروجی</button>
+    </div>
+    <div class="tabpanel" id="tab-vars" role="tabpanel"></div>
+    <div class="tabpanel" id="tab-stack" role="tabpanel" hidden></div>
+    <div class="tabpanel" id="tab-out" role="tabpanel" hidden></div>
+  </section>
+
+  <section class="pane viz-pane" aria-label="نمای گرافیکی">
+    <div class="caption" id="caption" aria-live="polite"></div>
+    <div class="viz" id="viz"></div>
+  </section>
+</main>
+
+<dialog id="helpDlg">
+  <div class="dlg-head"><span>راهنمای محیط</span><span class="spacer"></span><button class="btn" id="helpClose">بستن</button></div>
+  <div class="dlg-body">
+    <h3>این محیط چه می‌کند؟</h3>
+    <p>کد شبه‌پایتون را خط‌به‌خط اجرا می‌کند و پس از هر گام، حافظه (آرایه‌ها، لیست‌های پیوندی، درخت‌ها و گراف‌ها) را به‌شکل گرافیکی نشان می‌دهد. خط سبز «خطی است که اجرا خواهد شد» و نقطهٔ آبی «خط اجراشدهٔ قبلی» است. می‌توانید کد را ویرایش کنید؛ با هر تغییر، اجرا از ابتدا آماده می‌شود.</p>
+
+    <h3>کلیدهای میان‌بر</h3>
+    <table>
+      <tr><td><kbd>Alt</kbd>+<kbd>→</kbd></td><td>گام بعد (ورود به تابع)</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>←</kbd></td><td>گام قبل</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>↓</kbd></td><td>عبور از فراخوانی تابع</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>↑</kbd></td><td>خروج از تابع جاری</td></tr>
+      <tr><td><kbd>Alt</kbd>+<kbd>Space</kbd></td><td>اجرای خودکار / توقف</td></tr>
+    </table>
+
+    <h3>تشخیص خودکار ساختارها (بر پایهٔ نام ویژگی‌ها)</h3>
+    <table>
+      <tr><th>ساختار</th><th>چگونه ساخته شود</th></tr>
+      <tr><td>آرایه</td><td>هر لیست پایتون. متغیرهای <code>i</code>، <code>j</code>، <code>lo</code>، <code>mid</code>، <code>hi</code>، <code>pos</code> و … به‌صورت اشاره‌گر زیر خانه‌ها دیده می‌شوند. دکمهٔ «میله‌ای» ارتفاع مقدارها را نشان می‌دهد.</td></tr>
+      <tr><td>لیست پیوندی یک‌طرفه</td><td>کلاسی با ویژگی <code>next</code> (یا هر نام دیگر برای تنها اشاره‌گر).</td></tr>
+      <tr><td>لیست پیوندی دوطرفه</td><td>کلاسی با <code>next</code> و <code>prev</code>.</td></tr>
+      <tr><td>درخت دودویی</td><td>ویژگی‌های <code>left</code> و <code>right</code> (یا <code>lchild</code>/<code>rchild</code>).</td></tr>
+      <tr><td>درخت عمومی</td><td>ویژگی <code>children</code> (لیست یا دیکشنری از فرزندان).</td></tr>
+      <tr><td>گراف</td><td>دیکشنری لیست مجاورت <code>{'A': ['B']}</code>، دیکشنری وزن‌دار <code>{'A': {'B': 4}}</code>، ماتریس مجاورت (نام <code>adj</code> یا <code>graph</code>) یا اشیایی با <code>neighbors</code>.</td></tr>
+      <tr><td>اشاره‌گرها</td><td>هر متغیری که به یک گره اشاره کند (مثل <code>root</code>، <code>cur</code>، <code>node</code>) برچسب رنگی کنار آن گره می‌گیرد. برچسب‌های کمرنگ متعلق به فراخوانی‌های قبلی (بازگشت) هستند.</td></tr>
+    </table>
+    <p>ویژگی‌های دیگر گره (مثل <code>height</code>) زیر گره نوشته می‌شوند. اگر ویژگی <code>color</code> برابر <code>'red'</code> یا <code>'black'</code> باشد، گره قرمز/سیاه رسم می‌شود. لبهٔ نارنجیِ تازه یعنی اشاره‌گر همین گام عوض شده است؛ یال صورتی‌چین یعنی یالی که ساختار را از حالت درخت/لیست خارج کرده (مثلاً وسط چرخش).</p>
+
+    <h3>زبان پشتیبانی‌شده</h3>
+    <p><code>def</code>، <code>class</code> (با وراثت و <code>super()</code>)، <code>if/elif/else</code>، <code>while</code>، <code>for</code>، <code>break/continue</code>، <code>return</code>، <code>try/except</code>، <code>raise</code>، <code>global</code>، <code>lambda</code>، لیست/دیکشنری/مجموعه/چندتایی و comprehension، f-string، برش (<code>a[1:3]</code>)، <code>None/True/False</code>.</p>
+    <p>توابع داخلی: <code>print len range min max sum abs sorted enumerate zip set dict list int float str isinstance deque</code> و <code>math</code>. تابع ویژهٔ <code>note("متن")</code> پیامی در بالای نمای گرافیکی نشان می‌دهد.</p>
+    <p>نکته: شمارهٔ اعشاری و صحیح فرقی در نمایش ندارند (۳٫۰ همان ۳ نشان داده می‌شود).</p>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="js/interp.js"></script>
+<script src="js/scene.js"></script>
+<script src="js/render.js"></script>
+<script src="js/examples.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+{
+  "name": "data-structures-visualizer",
+  "version": "1.0.0",
+  "description": "محیط آموزشی ساختمان داده: اجرای گام‌به‌گام شبه‌کد پایتونی با نمای گرافیکی",
+  "private": true,
+  "scripts": {
+    "test": "node tests/lang.test.js && node tests/examples.test.js",
+    "start": "python3 -m http.server 8080"
+  },
+  "license": "MIT"
+}
