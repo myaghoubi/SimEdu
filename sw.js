@@ -1,9 +1,9 @@
 /* Service Worker: کش کامل برنامه برای کار آفلاین */
 const VERSION = 'dsviz-v1';
 const ASSETS = [
-  './', './index.html', './css/style.css',
-  './js/interp.js', './js/scene.js', './js/render.js', './js/examples.js', './js/app.js',
-  './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png',
+  './', './index.html', './style.css',
+  './interp.js', './scene.js', './render.js', './examples.js', './app.js',
+  './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './maskable-512.png',
 ];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
